@@ -1,0 +1,24 @@
+name: Notificación CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notificar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Ejecutar programa Hola Mundo
+        run: |
+          echo "Ejecutando el programa..."
+          python3 hola.py
+
+      - name: Enviar notificación a ntfy.sh
+        run: |
+          MENSAJE="🚀 Se ha hecho un push a la rama main del repositorio $GITHUB_REPOSITORY por $GITHUB_ACTOR"
+          curl -d "$MENSAJE" ntfy.sh/devops-itla
