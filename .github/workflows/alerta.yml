@@ -1,0 +1,34 @@
+name: Notificar a ntfy.sh
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notificar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verificar código
+        uses: actions/checkout@v3
+
+      - name: Ejecutar Hola Mundo
+        run: node hola.js
+
+      - name: Enviar notificación detallada a ntfy.sh
+        run: |
+          curl -H "Title: 📦 Deployment Completado - ITLA DevOps" \
+               -H "Priority: high" \
+               -d "📢 **Código subido correctamente a la rama main.**
+
+👤 **Autor:** ${{ github.actor }}
+
+🎓 **Estudiante:** Felix Sanchez (2024-0087)  
+📘 **Curso:** Electiva 2 - DevOps  
+👨‍🏫 **Profesor:** Elvys Cruz  
+
+💻 **Repositorio:** ${{ github.repository }}  
+🌿 **Rama:** ${{ github.ref_name }}  
+🧱 **Commit:** ${{ github.sha }}  
+🗒️ **Mensaje:** ${{ github.event.head_commit.message }}" \
+               https://ntfy.sh/devops-itla
